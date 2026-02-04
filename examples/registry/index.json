@@ -1,0 +1,37 @@
+{
+  "version": "0.1.0",
+  "lastUpdated": "2026-02-04T00:00:00Z",
+  "totalServers": 3,
+  "servers": [
+    {
+      "id": "filesystem",
+      "version": "1.0.0",
+      "description": "Access and manage files on the local filesystem",
+      "author": "Anthropic",
+      "keywords": ["files", "filesystem", "local", "storage"],
+      "downloads": 15420,
+      "rating": 4.8,
+      "manifestPath": "servers/filesystem/manifest.json"
+    },
+    {
+      "id": "github",
+      "version": "1.2.0",
+      "description": "Interact with GitHub repositories, issues, and pull requests",
+      "author": "GitHub Community",
+      "keywords": ["github", "git", "version-control", "api"],
+      "downloads": 8932,
+      "rating": 4.5,
+      "manifestPath": "servers/github/manifest.json"
+    },
+    {
+      "id": "slack",
+      "version": "0.9.0",
+      "description": "Send and receive messages from Slack workspaces",
+      "author": "Slack Tools",
+      "keywords": ["slack", "chat", "messaging", "communication"],
+      "downloads": 5641,
+      "rating": 4.2,
+      "manifestPath": "servers/slack/manifest.json"
+    }
+  ]
+}

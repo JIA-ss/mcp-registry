@@ -1,0 +1,84 @@
+{
+  "id": "filesystem",
+  "name": "Filesystem MCP Server",
+  "description": "Access and manage files on the local filesystem. Read, write, list directories, and search files.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Anthropic",
+    "url": "https://anthropic.com"
+  },
+  "repository": "https://github.com/modelcontextprotocol/servers",
+  "homepage": "https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem",
+  "license": "MIT",
+  "keywords": ["files", "filesystem", "local", "storage", "read", "write"],
+  "mcpVersion": "1.0",
+  "runtime": {
+    "type": "node",
+    "entry": "dist/index.js",
+    "env": [],
+    "envOptional": {
+      "FILESYSTEM_ROOT": "/home/user"
+    }
+  },
+  "installation": {
+    "npmPackage": "@modelcontextprotocol/server-filesystem",
+    "githubRepo": "https://github.com/modelcontextprotocol/servers.git"
+  },
+  "capabilities": [
+    {
+      "type": "tool",
+      "name": "read_file",
+      "description": "Read the contents of a file",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Path to the file to read"
+          }
+        },
+        "required": ["path"]
+      }
+    },
+    {
+      "type": "tool",
+      "name": "write_file",
+      "description": "Write content to a file",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Path to the file to write"
+          },
+          "content": {
+            "type": "string",
+            "description": "Content to write"
+          }
+        },
+        "required": ["path", "content"]
+      }
+    },
+    {
+      "type": "tool",
+      "name": "list_directory",
+      "description": "List contents of a directory",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Path to the directory"
+          }
+        },
+        "required": ["path"]
+      }
+    }
+  ],
+  "stats": {
+    "downloads": 15420,
+    "rating": 4.8,
+    "reviewCount": 127,
+    "lastUpdated": "2026-01-15T00:00:00Z"
+  }
+}

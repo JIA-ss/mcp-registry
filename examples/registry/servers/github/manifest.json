@@ -1,0 +1,90 @@
+{
+  "id": "github",
+  "name": "GitHub MCP Server",
+  "description": "Interact with GitHub repositories, issues, pull requests, and more. Full GitHub API access through natural language.",
+  "version": "1.2.0",
+  "author": {
+    "name": "GitHub Community",
+    "url": "https://github.com/modelcontextprotocol"
+  },
+  "repository": "https://github.com/modelcontextprotocol/servers",
+  "homepage": "https://github.com/modelcontextprotocol/servers/tree/main/src/github",
+  "license": "MIT",
+  "keywords": ["github", "git", "version-control", "api", "issues", "pull-requests"],
+  "mcpVersion": "1.0",
+  "runtime": {
+    "type": "node",
+    "entry": "dist/index.js",
+    "env": ["GITHUB_TOKEN"],
+    "envOptional": {}
+  },
+  "installation": {
+    "npmPackage": "@modelcontextprotocol/server-github",
+    "githubRepo": "https://github.com/modelcontextprotocol/servers.git"
+  },
+  "capabilities": [
+    {
+      "type": "tool",
+      "name": "get_repository",
+      "description": "Get information about a GitHub repository",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "owner": {
+            "type": "string",
+            "description": "Repository owner"
+          },
+          "repo": {
+            "type": "string",
+            "description": "Repository name"
+          }
+        },
+        "required": ["owner", "repo"]
+      }
+    },
+    {
+      "type": "tool",
+      "name": "create_issue",
+      "description": "Create a new issue in a repository",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "owner": {
+            "type": "string"
+          },
+          "repo": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          }
+        },
+        "required": ["owner", "repo", "title"]
+      }
+    },
+    {
+      "type": "tool",
+      "name": "search_repositories",
+      "description": "Search for repositories on GitHub",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Search query"
+          }
+        },
+        "required": ["query"]
+      }
+    }
+  ],
+  "stats": {
+    "downloads": 8932,
+    "rating": 4.5,
+    "reviewCount": 89,
+    "lastUpdated": "2026-01-28T00:00:00Z"
+  }
+}
