@@ -13,7 +13,7 @@ import { getConfig, setConfig, ensureDirectories } from './config.js';
 const program = new Command();
 const pkg = {
   name: '@oss-ai/mcp-registry',
-  version: '0.1.0',
+  version: '0.2.0',
   description: 'npm-like registry for Model Context Protocol servers',
 };
 
@@ -231,7 +231,7 @@ program
   .action((options) => {
     if (options.get) {
       const config = getConfig();
-      console.log((config as Record<string, unknown>)[options.get]);
+      console.log((config as unknown as Record<string, unknown>)[options.get]);
     } else if (options.set && options.value) {
       setConfig({ [options.set]: options.value });
       console.log(chalk.green(`Set ${options.set} = ${options.value}`));
@@ -250,6 +250,45 @@ program
     ensureDirectories();
     console.log(chalk.green('✓ MCP Registry initialized'));
     console.log(chalk.gray(`Config directory: ${getConfig().installDir}`));
+  });
+
+// Serve command - Start web server
+program
+  .command('serve')
+  .description('Start the web registry server')
+  .option('-p, --port <number>', 'Port to run on', '3000')
+  .option('-h, --host <host>', 'Host to bind to', 'localhost')
+  .action(async (options) => {
+    try {
+      const { startServer } = await import('./web-server.js');
+      const client = new RegistryClient();
+      
+      console.log(chalk.cyan('Starting MCP Registry web server...'));
+      
+      const server = await startServer(client, {
+        port: parseInt(options.port),
+        host: options.host,
+      });
+      
+      console.log(chalk.green(`\n✓ Server running at http://${options.host}:${server.port}`));
+      console.log(chalk.gray('\nAPI Endpoints:'));
+      console.log(chalk.gray('  GET /             - API info'));
+      console.log(chalk.gray('  GET /api/servers  - List servers'));
+      console.log(chalk.gray('  GET /api/servers/:id - Server details'));
+      console.log(chalk.gray('  GET /api/search?q= - Search servers'));
+      console.log(chalk.gray('  GET /api/categories - List categories'));
+      console.log(chalk.gray('\nPress Ctrl+C to stop'));
+      
+      // Keep process alive
+      process.on('SIGINT', async () => {
+        console.log(chalk.yellow('\n\nShutting down server...'));
+        await server.close();
+        process.exit(0);
+      });
+    } catch (error) {
+      console.error(chalk.red(`Failed to start server: ${(error as Error).message}`));
+      process.exit(1);
+    }
   });
 
 program.parse();

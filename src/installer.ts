@@ -218,7 +218,7 @@ export class Installer {
     );
   }
   
-  private async installBinary(manifest: MCPServerManifest, serverDir: string): Promise<void> {
+  private async installBinary(manifest: MCPServerManifest, _serverDir: string): Promise<void> {
     if (manifest.installation.githubRepo) {
       // Download latest release
       // This is a simplified version - real implementation would use GitHub API

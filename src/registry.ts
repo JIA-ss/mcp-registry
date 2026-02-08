@@ -6,8 +6,7 @@ import axios from 'axios';
 import type { 
   MCPServerManifest, 
   RegistryIndex, 
-  SearchResult,
-  RegistryEntry 
+  SearchResult
 } from './types.js';
 import { getConfig } from './config.js';
 
@@ -128,5 +127,41 @@ export class RegistryClient {
     return Promise.all(
       sorted.map(entry => this.getManifest(entry.id))
     );
+  }
+  
+  // Alias methods for consistent API naming
+  
+  /**
+   * Alias for list() - List all servers
+   */
+  async listServers(options?: { page?: number; pageSize?: number }): Promise<SearchResult> {
+    return this.list(options);
+  }
+  
+  /**
+   * Alias for getManifest() - Get a specific server
+   */
+  async getServer(id: string): Promise<MCPServerManifest | null> {
+    try {
+      return await this.getManifest(id);
+    } catch {
+      return null;
+    }
+  }
+  
+  /**
+   * Get all unique categories/keywords
+   */
+  async getCategories(): Promise<string[]> {
+    const index = await this.getIndex();
+    const categories = new Set<string>();
+    
+    index.servers.forEach(server => {
+      server.keywords.forEach(keyword => {
+        categories.add(keyword);
+      });
+    });
+    
+    return Array.from(categories).sort();
   }
 }

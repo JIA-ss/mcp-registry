@@ -40,7 +40,37 @@ mcp-registry update filesystem
 
 # Remove a server
 mcp-registry remove filesystem
+
+# Start web registry server
+mcp-registry serve
 ```
+
+## Web Registry Server
+
+Start a local web server to browse the registry via HTTP API:
+
+```bash
+# Start server on default port (3000)
+mcp-registry serve
+
+# Start on custom port
+mcp-registry serve --port 8080
+
+# Start on all interfaces
+mcp-registry serve --host 0.0.0.0
+```
+
+### API Endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| `GET /` | API info |
+| `GET /api/servers` | List all servers (paginated) |
+| `GET /api/servers/:id` | Get server details |
+| `GET /api/search?q=query` | Search servers |
+| `GET /api/categories` | List all categories |
+| `GET /api/servers/popular` | Popular servers |
+| `GET /api/servers/recent` | Recently updated |
 
 ## Registry Structure
 
@@ -68,7 +98,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
 ## Roadmap
 
 - [x] v0.1.0 - Core CLI commands
-- [ ] v0.2.0 - Web registry interface
+- [x] v0.2.0 - Web registry interface
 - [ ] v0.3.0 - Server ratings & reviews
 - [ ] v0.4.0 - Automated server validation
 - [ ] v1.0.0 - Public registry launch
